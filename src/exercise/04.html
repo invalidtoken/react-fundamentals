@@ -6,17 +6,32 @@
   <script src="https://unpkg.com/react@17.0.0/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
   <script type="text/babel">
-    const Message = ({children}) => {
-      return <div>{children}</div>
+    const UpperCaseMessage = ({children}) => {
+      return (
+        <div className="message" style={{textTransform: 'upper-case'}}>
+          {children}
+        </div>
+      )
+    }
+    const Message = ({greetings, message}) => {
+      return (
+        <UpperCaseMessage>
+          {greetings}, {message}
+        </UpperCaseMessage>
+      )
+    }
+
+    Message.propTypes = {
+      greetings: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
     }
 
     const element = (
       <div className="container">
-        {Message({children: 'Hello World'})} {/* ❌ No component created */}
-        <Message>Goodbye World</Message> {/* ✅ Component created */}
-        {React.createElement(Message, {}, 'Goodbye World')}{' '}
-        {/* ✅ Component created */}
+        {Message({greetings: 'Hello', message: 'Doctor'})}
+        <Message greetings="Hey" message="Doctor"></Message>
       </div>
     )
 
